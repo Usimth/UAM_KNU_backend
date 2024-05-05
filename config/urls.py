@@ -30,4 +30,6 @@ urlpatterns = [
 
     # 버티포트 조회, 생성, 삭제
     path('vertiports', include('apps.vertiports.urls')),
+
+    path('optimization/', include('apps.optimization.urls')),
 ]
