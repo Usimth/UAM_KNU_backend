@@ -26,5 +26,5 @@ urlpatterns = [
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
 
     # 회원가입 및 로그인
-    path('user', include('apps.accounts.urls')),
+    path('user/', include('apps.accounts.urls')),
 ]
