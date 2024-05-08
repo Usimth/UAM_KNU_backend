@@ -50,3 +50,11 @@ class AuthView(APIView):
             return res
         else:
             return Response({'message': 'login failed'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # 로그아웃
+    def delete(self, request):
+        # 쿠키에 저장된 JWT 삭제
+        response = Response({'message': 'logout success'}, status=status.HTTP_202_ACCEPTED)
+        response.delete_cookie("access")
+        response.delete_cookie("refresh")
+        return response
