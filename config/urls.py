@@ -26,5 +26,8 @@ urlpatterns = [
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
 
     # 회원가입 및 로그인
-    path('user/', include('apps.accounts.urls')),
+    path('users', include('apps.accounts.urls')),
+
+    # 버티포트 조회, 생성, 삭제
+    path('vertiports', include('apps.vertiports.urls')),
 ]
