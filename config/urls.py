@@ -27,4 +27,7 @@ urlpatterns = [
 
     # 회원가입 및 로그인
     path('users', include('apps.accounts.urls')),
+
+    # 버티포트 조회, 생성, 삭제
+    path('vertiports', include('apps.vertiports.urls')),
 ]

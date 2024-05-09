@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # 앱
     'apps.accounts',
     'apps.optimization',
+    'apps.vertiports',
 
     # 라이브러리
     'rest_framework',
@@ -71,6 +72,7 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    'config.middleware.jwt.JWTAuthenticationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
