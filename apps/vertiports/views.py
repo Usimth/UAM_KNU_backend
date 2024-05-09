@@ -27,3 +27,16 @@ class VertiportView(APIView):
             return Response({'message': 'post success', 'name': vertiport.name}, status=status.HTTP_200_OK)
 
         return Response({'message': 'post failed', 'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    # 버티포트 삭제
+    def delete(self, request, name):
+        # 관리자만 삭제 가능
+        if request.user.is_admin:
+            try:
+                vertiport = Vertiport.objects.get(pk=name)
+                vertiport.delete()
+                return Response({'message': 'delete success'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response({'message': 'delete failed'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'message': 'delete failed'}, status=status.HTTP_400_BAD_REQUEST)
