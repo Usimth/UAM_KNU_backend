@@ -3,12 +3,15 @@ import pulp
 
 class VertiportLP:
     def __init__(self, weight):
+        
+        # DB에서 주어지는 변수 
         self.max_fato_uam = 4
         self.max_path_in_uam = 6
         self.max_gate_uam = 8
         self.max_path_out_uam = 6
         self.max_waiting_room_psg = 100
 
+        # 사용자한테 입력받을 변수
         self.current_fato_in_uam = 2
         self.current_path_in_uam = 6
         self.current_gate_uam = 3
@@ -60,32 +63,32 @@ class VertiportLP:
                       + self.w10 * self.x_fato_out_uam / self.max_fato_uam
         problem += (congest - self.weight * utilization)
 
-        # 전체 UAM 대수 동일
+        # 제약조건 1 : 전체 UAM 대수 동일
         problem += self.x_fato_in_uam + self.x_path_in_uam + self.x_gate_uam + self.x_path_out_uam + self.x_fato_out_uam \
                    == self.current_fato_in_uam + self.current_path_in_uam + self.current_gate_uam + self.current_path_out_uam + self.current_fato_out_uam
 
-        # 전체 인원 동일
+        # 제약조건 2 : 전체 인원 동일
         problem += 4 * (self.x_path_out_uam + self.x_fato_out_uam) + self.x_gate_uam_psg + self.x_waiting_room_psg \
                    == 4 * (self.current_path_out_uam + self.current_fato_out_uam) + self.current_gate_uam_psg + self.current_waiting_room_psg
 
-        # 대합실 인원은 같거나 줄어듦
+        # 제약조건 3 : 대합실 인원은 같거나 줄어듦
         problem += self.x_waiting_room_psg <= self.current_waiting_room_psg
 
-        # 현재 탑승 중인 사람은 4명 채워져서 출발하거나 그대로 대기
+        # 제약조건 4 : 현재 탑승 중인 사람은 4명 채워져서 출발하거나 그대로 대기
         problem += (self.x_path_out_uam + self.x_fato_out_uam) * 4 + self.x_gate_uam_psg >= self.current_gate_uam_psg
 
-        # fato_in + path_in의 UAM 대수는 같거나 줄어듦
+        # 제약조건 5 : fato_in + path_in의 UAM 대수는 같거나 줄어듦
         problem += self.x_fato_in_uam + self.x_path_in_uam <= self.current_fato_in_uam + self.current_path_in_uam
 
-        # path_out + fato_out의 UAM 대수는 같거나 늘어남
+        # 제약조건 6 : path_out + fato_out의 UAM 대수는 같거나 늘어남
         problem += self.x_path_out_uam + self.x_fato_out_uam >= self.current_path_out_uam + self.current_fato_out_uam
 
-        # fato_in의 UAM 대수는 같거나 줄어들고 fato_out의 UAM 대수는 같거나 늘어남
+        # 제약조건 7 : fato_in의 UAM 대수는 같거나 줄어들고 fato_out의 UAM 대수는 같거나 늘어남
         problem += self.x_fato_in_uam <= self.current_fato_in_uam
         problem += self.x_fato_out_uam >= self.current_fato_out_uam
         problem += self.x_fato_in_uam + self.x_fato_out_uam <= self.max_fato_uam
 
-        # gate의 UAM 탑승 인원은 최대 탑승 가능 인원보다 작거나 같음
+        # 제약조건 8 :  gate의 UAM 탑승 인원은 최대 탑승 가능 인원보다 작거나 같음
         problem += self.x_gate_uam_psg <= self.x_gate_uam * 4
 
         return problem
