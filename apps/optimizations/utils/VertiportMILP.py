@@ -1,7 +1,7 @@
 import pulp
 
 
-class Optimization:
+class VertiportLP:
     def __init__(self, weight):
         self.max_fato_uam = 4
         self.max_path_in_uam = 6
@@ -90,7 +90,7 @@ class Optimization:
 
         return problem
 
-    def optimizing(self):
+    def solve(self):
         problem = self.set_problem()
         problem.solve()
 
