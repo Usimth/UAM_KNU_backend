@@ -101,3 +101,18 @@ class VertiportLP:
         solution['utilization'] = self.get_utilization()
 
         return solution
+
+# code for debug
+for weight_value in range(1, 10):
+    #0.1씩 weight 증가
+    weight = weight_value /10
+    lp_solver = VertiportLP(weight=weight)
+    solution = lp_solver.solve()
+
+    # 결과 출력
+    print(f"Weight: {weight}")
+    #for var_name, var_value in solution.items():
+    #    print(f"{var_name}: {var_value}")
+    print(f"Congestion: {solution['congestion']}")
+    print(f"Utilization: {solution['utilization']}")
+    print("-------------------------")
