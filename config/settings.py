@@ -46,8 +46,8 @@ INSTALLED_APPS = [
 
     # 앱
     'apps.accounts',
-    'apps.optimization',
     'apps.vertiports',
+    'apps.optimizations',
 
     # 라이브러리
     'rest_framework',

@@ -7,6 +7,6 @@ from .optimization import *
 
 class optimizer(APIView):
     def get(self,request:Request ):
-        vert = vertiport(0.1)
+        vert = Optimization(0.1)
         solution = vert.optimizing()
         return Response(solution,status=status.HTTP_200_OK)
